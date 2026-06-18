@@ -1,4 +1,4 @@
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api/v1';
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://netsurf-backend.vercel.app/api/v1';
 
 export const API_ENDPOINTS = {
   auth: `${API_BASE_URL}/auth`,
