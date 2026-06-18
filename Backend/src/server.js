@@ -9,21 +9,8 @@ import responseHandler from "./utils/responseHandler.js";
 const app = express();
 const server = createServer(app);
 
-const allowedOrigins = [
-    "http://localhost:5173",
-    "http://localhost:5174",
-    "http://localhost:5175",
-    "http://localhost:5555"
-];
-
 app.use(cors({
-    origin: function (origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error("Not allowed by CORS"));
-        }
-    },
+    origin: true,
     credentials: true
 }));
 
