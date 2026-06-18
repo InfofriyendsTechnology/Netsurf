@@ -7,7 +7,8 @@ import connectDB from "./config/mongodb.js";
 import responseHandler from "./utils/responseHandler.js";
 
 const app = express();
-const server = createServer(app);
+// Serverless environments initialize DB globally
+connectDB().catch(console.error);
 
 app.use(cors({
     origin: true,
@@ -32,15 +33,11 @@ app.get("*", (req, res) => {
     return responseHandler.error(res, "Route not found");
 });
 
-const startServer = async () => {
-    try {
-        await connectDB();
-        server.listen(PORT, () => {
-            console.log(`✅ Netsurf Server running on port ${PORT}`);
-        });
-    } catch (error) {
-        console.error('❌ Error starting server:', error.message);
-    }
-};
+if (process.env.NODE_ENV !== 'production') {
+    const server = createServer(app);
+    server.listen(PORT, () => {
+        console.log(`✅ Netsurf Server running on port ${PORT}`);
+    });
+}
 
-startServer();
+export default app;
