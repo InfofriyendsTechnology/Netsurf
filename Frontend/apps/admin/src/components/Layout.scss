@@ -1,0 +1,225 @@
+@use '@netsurf/ui/styles/variables' as *;
+
+.layout {
+    display: flex;
+    min-height: 100vh;
+
+    // --- Overlay ---
+    &__overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 90;
+        display: none;
+
+        @include respond-to(lg) {
+            display: block;
+        }
+    }
+
+    // --- Sidebar ---
+    &__sidebar {
+        width: $sidebar-width;
+        min-height: 100vh;
+        background-color: $bg-color;
+        border-right: 1px solid $border-color;
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 100;
+        transition: transform $transition-normal;
+
+        @include respond-to(lg) {
+            transform: translateX(-100%);
+
+            &--open {
+                transform: translateX(0);
+            }
+        }
+    }
+
+    &__sidebar-header {
+        @include flex-between;
+        padding: $spacing-lg $spacing-md;
+        border-bottom: 1px solid $border-color;
+    }
+
+    &__logo {
+        font-size: $font-size-xl;
+        font-weight: $font-weight-bold;
+        letter-spacing: 3px;
+        color: $text-color;
+    }
+
+    &__close-btn {
+        display: none;
+        background: none;
+        border: none;
+        color: $text-color;
+        font-size: $font-size-xl;
+        padding: $spacing-xs;
+
+        @include respond-to(lg) {
+            display: flex;
+        }
+    }
+
+    // --- Navigation ---
+    &__nav {
+        flex: 1;
+        padding: $spacing-md 0;
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-xs;
+    }
+
+    &__nav-item {
+        @include flex-between;
+        justify-content: flex-start;
+        gap: $spacing-md;
+        width: 100%;
+        padding: $spacing-md $spacing-lg;
+        background: none;
+        border: none;
+        color: $text-color;
+        font-size: $font-size-base;
+        font-weight: $font-weight-medium;
+        text-align: left;
+        transition: background-color $transition-fast;
+
+        &:hover {
+            background-color: $gray-100;
+        }
+
+        &--active {
+            background-color: $text-color;
+            color: $bg-color;
+
+            &:hover {
+                background-color: $text-color;
+            }
+        }
+    }
+
+    &__nav-icon {
+        font-size: $font-size-lg;
+        flex-shrink: 0;
+    }
+
+    &__nav-label {
+        font-size: $font-size-base;
+    }
+
+    // --- Sidebar Footer ---
+    &__sidebar-footer {
+        border-top: 1px solid $border-color;
+        padding: $spacing-md;
+    }
+
+    &__user-info {
+        display: flex;
+        flex-direction: column;
+        padding: $spacing-sm $spacing-md;
+        margin-bottom: $spacing-sm;
+    }
+
+    &__user-name {
+        font-size: $font-size-sm;
+        font-weight: $font-weight-semibold;
+        color: $text-color;
+    }
+
+    &__user-email {
+        font-size: $font-size-xs;
+        color: $gray-500;
+    }
+
+    &__logout-btn {
+        @include flex-between;
+        justify-content: flex-start;
+        gap: $spacing-md;
+        width: 100%;
+        padding: $spacing-md;
+        background: none;
+        border: 1px solid $border-color;
+        border-radius: $radius-md;
+        color: $error-color;
+        font-size: $font-size-base;
+        font-weight: $font-weight-medium;
+        transition: background-color $transition-fast;
+
+        &:hover {
+            background-color: $error-light;
+        }
+    }
+
+    // --- Main Area ---
+    &__main {
+        flex: 1;
+        margin-left: $sidebar-width;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+
+        @include respond-to(lg) {
+            margin-left: 0;
+        }
+    }
+
+    // --- Top Bar ---
+    &__topbar {
+        @include flex-between;
+        justify-content: flex-start;
+        gap: $spacing-md;
+        padding: $spacing-md $spacing-xl;
+        border-bottom: 1px solid $border-color;
+        background-color: $bg-color;
+        height: $topbar-height;
+        position: sticky;
+        top: 0;
+        z-index: 50;
+    }
+
+    &__hamburger {
+        display: none;
+        background: none;
+        border: none;
+        color: $text-color;
+        font-size: $font-size-xl;
+        padding: $spacing-xs;
+
+        @include respond-to(lg) {
+            display: flex;
+        }
+    }
+
+    &__topbar-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__topbar-title {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-semibold;
+        color: $text-color;
+        line-height: $line-height-tight;
+    }
+
+    &__topbar-subtitle {
+        font-size: $font-size-xs;
+        color: $gray-500;
+        line-height: $line-height-tight;
+    }
+
+    // --- Content ---
+    &__content {
+        flex: 1;
+        padding: $spacing-xl;
+
+        @include respond-to(md) {
+            padding: $spacing-md;
+        }
+    }
+}

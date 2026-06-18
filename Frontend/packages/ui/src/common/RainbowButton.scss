@@ -1,0 +1,159 @@
+/* Rainbow Button Component - Pure White with Bottom Rainbow Glow */
+.rainbow-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 52px;
+  padding: 0.5rem 2rem;
+  font-family: 'Khand', sans-serif !important;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #0b0b0b;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  
+  // Pure white background
+  background: #ffffff;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  gap: 12px;
+  overflow: visible;
+  
+  // Rainbow glow effect at bottom - matching image
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: -1;
+    height: 20px;
+    width: 85%;
+    background: linear-gradient(90deg,
+      hsl(90, 100%, 50%),
+      hsl(180, 100%, 50%),
+      hsl(210, 100%, 60%),
+      hsl(270, 100%, 60%),
+      hsl(0, 100%, 50%)
+    );
+    background-size: 200% 100%;
+    filter: blur(25px);
+    opacity: 0.8;
+    animation: rainbow-slide 4s infinite linear;
+    border-radius: 50%;
+  }
+
+  // &:hover {
+  //   background: #ffffff;
+  //   transform: translateY(-3px);
+  //   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    
+  //   &::before {
+  //     opacity: 1;
+  //     filter: blur(30px);
+  //     height: 45px;
+  //   }
+  // }
+
+  &:active {
+    transform: translateY(-1px);
+  }
+
+  &.disabled,
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+    transform: none;
+  }
+
+  .rainbow-button-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .button-icon {
+    font-size: 1.2rem;
+  }
+
+  // Loading dots animation
+  .loading-dots {
+    display: inline-flex;
+    margin-left: 4px;
+
+    .dot {
+      animation: dotPulse 1.5s infinite;
+
+      &:nth-child(1) {
+        animation-delay: 0s;
+      }
+
+      &:nth-child(2) {
+        animation-delay: 0.3s;
+      }
+
+      &:nth-child(3) {
+        animation-delay: 0.6s;
+      }
+    }
+  }
+}
+
+/* Rainbow Slide Animation - Synchronized for border and shadow */
+@keyframes rainbow-slide {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+/* Dot Pulse Animation */
+@keyframes dotPulse {
+  0%, 80%, 100% {
+    opacity: 0.3;
+  }
+  40% {
+    opacity: 1;
+  }
+}
+
+/* Light Mode Support (if needed in future) */
+html.light-mode .rainbow-button {
+  background: linear-gradient(135deg, #ffffff 0%, #e9ecef 30%, #adb5bd 70%, #6c757d 100%);
+  color: #0b0b0b;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .rainbow-button {
+    height: 50px;
+    font-size: 0.9rem;
+    letter-spacing: 0.03em;
+
+    .button-icon {
+      font-size: 1.1rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .rainbow-button {
+    height: 48px;
+    padding: 0.5rem 1.5rem;
+    font-size: 0.85rem;
+
+    .button-icon {
+      font-size: 1rem;
+    }
+  }
+}

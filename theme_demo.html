@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Theme Changer Demo</title>
+    <style>
+        /* Base Variables (Admin can change these 4 variables) */
+        :root {
+            --bg-color: #ffffff;      /* 1. Background */
+            --text-color: #000000;    /* 2. Text */
+            --border-color: #000000;  /* 3. Border */
+            --accent-color: #000000;  /* 4. Accent/Primary */
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: all 0.3s ease;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .header {
+            padding: 20px;
+            background-color: var(--accent-color);
+            /* Contrast text logic could be added, using bg-color for text inside accent for demo */
+            color: var(--bg-color); 
+            border: 3px solid var(--border-color);
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .content {
+            margin-top: 20px;
+            padding: 20px;
+            border: 3px solid var(--border-color);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        button {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            border: 2px solid var(--border-color);
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        /* Admin Panel Styles (Fixed so it always remains visible) */
+        .admin-panel {
+            margin-top: 40px;
+            padding: 20px;
+            background: #e0e0e0;
+            color: #000;
+            border-radius: 8px;
+            border: 2px dashed #666;
+            font-family: sans-serif;
+        }
+
+        .admin-panel h3 {
+            margin-top: 0;
+        }
+
+        .color-control {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .color-control label {
+            font-weight: bold;
+            width: 150px;
+        }
+        
+        input[type="color"] {
+            cursor: pointer;
+            width: 50px;
+            height: 40px;
+            border: 1px solid #999;
+            padding: 2px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Netsurf Digital Office</h1>
+        <p>Dynamic 4-Color Variable Website</p>
+    </div>
+
+    <div class="content">
+        <h2>Welcome to our Demo</h2>
+        <p>This page uses 4 distinct CSS variables. You can customize them all in the Admin Panel below.</p>
+        <button>Sample Action Button</button>
+    </div>
+
+    <!-- Admin Panel for Demo -->
+    <div class="admin-panel">
+        <h3>Admin Panel: Custom Color Picker</h3>
+        <p>Change any of the 4 colors below to instantly update the website:</p>
+        
+        <div class="color-control">
+            <label for="bgColorPicker">1. Background Color:</label>
+            <input type="color" id="bgColorPicker" value="#ffffff" oninput="updateColor('--bg-color', this.value)">
+        </div>
+
+        <div class="color-control">
+            <label for="textColorPicker">2. Text Color:</label>
+            <input type="color" id="textColorPicker" value="#000000" oninput="updateColor('--text-color', this.value)">
+        </div>
+
+        <div class="color-control">
+            <label for="borderColorPicker">3. Border Color:</label>
+            <input type="color" id="borderColorPicker" value="#000000" oninput="updateColor('--border-color', this.value)">
+        </div>
+
+        <div class="color-control">
+            <label for="accentColorPicker">4. Accent Color:</label>
+            <input type="color" id="accentColorPicker" value="#000000" oninput="updateColor('--accent-color', this.value)">
+        </div>
+    </div>
+
+    <script>
+        // Function to update a specific CSS variable
+        function updateColor(variableName, colorHex) {
+            document.documentElement.style.setProperty(variableName, colorHex);
+        }
+    </script>
+</body>
+</html>

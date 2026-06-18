@@ -1,0 +1,176 @@
+// ─── Shared shimmer animation ──────────────────────────────────────────────────
+@keyframes shimmer-wave {
+    0%   { background-position: -600px 0; }
+    100% { background-position: 600px 0; }
+}
+
+// Every shimmer element shares this mixin
+%shimmer-base {
+    background: linear-gradient(
+        90deg,
+        var(--shimmer-base) 25%,
+        var(--shimmer-highlight) 50%,
+        var(--shimmer-base) 75%
+    );
+    background-size: 600px 100%;
+    animation: shimmer-wave 1.6s infinite linear;
+    border-radius: 6px;
+}
+
+.shimmer-element {
+    @extend %shimmer-base;
+}
+
+// ─── STAT CARD SKELETON ────────────────────────────────────────────────────────
+.skeleton-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    width: 100%;
+    padding-block: 8px;
+
+    .skeleton-stat-card {
+        background: var(--skeleton-bg);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 14px;
+        padding: 22px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .shimmer-stat-title  { @extend %shimmer-base; height: 12px; width: 55%; }
+    .shimmer-stat-number { @extend %shimmer-base; height: 34px; width: 42%; margin-top: 4px; border-radius: 8px; }
+    .shimmer-stat-detail { @extend %shimmer-base; height: 10px; width: 70%; }
+}
+
+// ─── TABLE SKELETON ────────────────────────────────────────────────────────────
+.skeleton-table-container {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.07);
+}
+
+.skeleton-table-header {
+    display: flex;
+    gap: 12px;
+    padding: 14px 20px;
+    padding: 14px 20px;
+    background: var(--skeleton-bg);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+
+    .shimmer-th {
+        @extend %shimmer-base;
+        height: 12px;
+        border-radius: 4px;
+        opacity: 0.5;
+    }
+}
+
+.skeleton-table-row {
+    display: flex;
+    gap: 12px;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    align-items: center;
+    transition: background 0.2s;
+
+    &:last-child { border-bottom: none; }
+    &:nth-child(odd) { background: rgba(255,255,255,0.015); }
+}
+
+.skeleton-table-cell {
+    display: flex;
+    align-items: center;
+}
+
+.shimmer-cell-double {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+}
+
+.shimmer-cell-line    { @extend %shimmer-base; height: 13px; width: 80%; }
+.shimmer-cell-line-sm { @extend %shimmer-base; height: 10px; width: 55%; }
+.shimmer-cell-pill    { @extend %shimmer-base; height: 22px; width: 65%; border-radius: 20px; }
+
+// ─── ANALYTICS CARD SKELETON ───────────────────────────────────────────────────
+.skeleton-analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    width: 100%;
+    margin-bottom: 24px;
+
+    .skeleton-analytics-card {
+        background: var(--skeleton-bg);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 14px;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .shimmer-analytics-icon  { @extend %shimmer-base; width: 42px; height: 42px; border-radius: 10px; flex-shrink: 0; }
+    .shimmer-analytics-text  { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+    .shimmer-analytics-label { @extend %shimmer-base; height: 11px; width: 50%; }
+    .shimmer-analytics-value { @extend %shimmer-base; height: 22px; width: 70%; border-radius: 6px; }
+}
+
+// ─── DETAIL CARD SKELETON ──────────────────────────────────────────────────────
+.skeleton-detail-card {
+    background: var(--skeleton-bg);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 28px;
+
+    .shimmer-detail-title {
+        @extend %shimmer-base;
+        height: 20px;
+        width: 30%;
+        margin-bottom: 24px;
+    }
+
+    .shimmer-detail-fields {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+
+        @media (max-width: 600px) { grid-template-columns: 1fr; }
+    }
+
+    .shimmer-detail-field {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .shimmer-field-label { @extend %shimmer-base; height: 10px; width: 40%; }
+    .shimmer-field-value { @extend %shimmer-base; height: 18px; width: 80%; }
+}
+
+// ─── GRID CARD SKELETON ────────────────────────────────────────────────────────
+.skeleton-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 18px;
+    width: 100%;
+
+    .skeleton-grid-card {
+        background: var(--skeleton-bg);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 14px;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .shimmer-card-img   { @extend %shimmer-base; height: 140px; width: 100%; border-radius: 10px; }
+    .shimmer-card-title { @extend %shimmer-base; height: 14px; width: 70%; }
+    .shimmer-card-sub   { @extend %shimmer-base; height: 11px; width: 50%; }
+}

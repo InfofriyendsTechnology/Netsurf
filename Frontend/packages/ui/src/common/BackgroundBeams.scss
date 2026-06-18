@@ -1,0 +1,21 @@
+/* Background Beams Component Styling */
+.background-beams {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+
+  .background-beams-svg {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+}

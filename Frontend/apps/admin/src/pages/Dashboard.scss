@@ -1,0 +1,1026 @@
+// =============================================================================
+// DASHBOARD - NFCWALA Theme
+// =============================================================================
+
+@use '@netsurf/ui/styles/variables' as *;
+
+// Dashboard Container
+// -----------------------------------------------------------------------------
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  min-height: 100dvh; // dynamic viewport height for mobile browsers
+  background: $bg-primary;
+  font-family: $font-primary;
+}
+
+// Sidebar Overlay (Mobile)
+// -----------------------------------------------------------------------------
+.sidebar-overlay {
+  display: none;
+  
+  @media (max-width: $breakpoint-lg) {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(2px);
+    z-index: 99; // Below sidebar (100) but above main content
+    cursor: pointer;
+    animation: fadeIn 0.2s ease-out;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// Sidebar
+// -----------------------------------------------------------------------------
+.sidebar {
+  width: var(--sidebar-width, 260px);
+  background: $bg-card;
+  backdrop-filter: blur(10px);
+  border-right: 1px solid var(--border-color);
+  padding: 0 $space-md;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  height: 100dvh; // dvh fixes mobile address bar issues
+  overflow: hidden; // Hide overflow on sidebar itself
+  z-index: 100;
+  transition: width $transition-normal, transform $transition-normal;
+
+  // Mobile: Overlay sidebar
+  @media (max-width: $breakpoint-lg) {
+    transform: translateX(calc(var(--sidebar-width, 260px) * -1));
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+
+    &.open {
+      transform: translateX(0);
+    }
+  }
+
+
+  // Sidebar Header
+  &-header {
+    height: 87px; // Match top-bar height (88px) minus 1px border to align perfectly
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: $space-lg;
+    transition: all $transition-normal;
+    flex-shrink: 0; // Prevent height from shrinking
+    
+    @media (max-width: $breakpoint-md) {
+      height: 63px; // Match mobile top-bar height (64px) minus 1px border
+    }
+
+    &-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: $space-md;
+    }
+
+  h2 {
+      font-family: $font-heading;
+      font-size: $font-size-xl;
+      font-weight: $font-weight-bold;
+      margin: 0;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      background: $color-accent-gradient;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      
+      @media (max-width: $breakpoint-md) {
+        font-size: $font-size-lg;
+      }
+    }
+
+    .subtitle {
+      font-size: $font-size-xs;
+      color: $color-gray-400;
+      margin: 0;
+      font-weight: $font-weight-medium;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .slogan {
+      font-size: 11px;
+      color: $color-gray-500;
+      margin: $space-xs 0 0 0;
+      font-weight: $font-weight-normal;
+      letter-spacing: 0.3px;
+      line-height: 1.2;
+    }
+  }
+
+  // Sidebar Navigation (Scrollable Area)
+  &-nav {
+    display: flex;
+    flex-direction: column;
+    gap: $space-sm;
+    flex: 1;
+    overflow-y: auto; // Only navigation area scrolls
+    overflow-x: hidden;
+    padding-right: $space-xs; // Space for scrollbar
+    
+    // Custom thin scrollbar for navigation
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: var(--scrollbar-track);
+      border-radius: $radius-full;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--scrollbar-thumb);
+      border-radius: $radius-full;
+      transition: background $transition-fast;
+
+      &:hover {
+        background: var(--scrollbar-thumb-hover);
+      }
+    }
+
+    // Firefox scrollbar
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  }
+
+  // Sidebar Close Button (Mobile Only)
+  &-close-btn {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: $color-white;
+    font-size: $font-size-2xl;
+    cursor: pointer;
+    padding: $space-xs;
+    border-radius: $radius-md;
+    transition: all $transition-fast;
+    flex-shrink: 0;
+
+    @media (max-width: $breakpoint-lg) {
+      display: flex;
+    }
+
+    &:hover {
+      background: var(--bg-hover);
+    }
+
+    svg {
+      display: block;
+    }
+  }
+}
+
+// Sidebar Footer
+// -----------------------------------------------------------------------------
+.sidebar-footer {
+  margin-top: auto; // Push to bottom
+  margin-bottom: $space-lg;
+  display: flex;
+  gap: $space-xs;
+  padding: $space-xs;
+  background: var(--bg-hover);
+  border-radius: $radius-lg;
+  border: 1px solid var(--border-color);
+  flex-shrink: 0; // Keep footer fixed at bottom
+}
+
+// Sidebar Theme Button
+// -----------------------------------------------------------------------------
+.sidebar-theme-btn {
+  font-family: $font-primary;
+  padding: $space-sm;
+  font-size: $font-size-lg;
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  border-radius: $radius-md;
+  cursor: pointer;
+  transition: all $transition-fast;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+
+  .theme-icon {
+    font-size: $font-size-lg;
+    line-height: 1;
+  }
+
+  &:hover {
+    background: rgba(148, 163, 184, 0.15);
+    color: var(--text-primary);
+  }
+
+  &:active {
+    transform: scale(0.9);
+  }
+}
+
+// Sidebar Logout Button
+// -----------------------------------------------------------------------------
+.sidebar-logout-btn {
+  font-family: $font-primary;
+  padding: $space-sm $space-md;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: #ffffff;
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  border: none;
+  border-radius: $radius-md;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all $transition-fast;
+  box-shadow: 0 2px 6px rgba(220, 38, 38, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-xs;
+  text-align: center;
+  white-space: nowrap;
+  flex: 1;
+
+  .logout-icon {
+    font-size: $font-size-md;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(220, 38, 38, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+// Navigation Items
+// -----------------------------------------------------------------------------
+.nav-item {
+  font-family: $font-primary;
+  padding: $space-sm $space-md;
+  color: $color-gray-400;
+  text-decoration: none;
+  border-radius: $radius-md;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  transition: all $transition-normal;
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+
+  .nav-icon {
+    font-size: $font-size-lg;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    background: var(--bg-hover);
+    color: $color-white;
+    transform: translateX(5px);
+  }
+
+  &.active {
+    background: $color-accent-gradient;
+    color: $color-primary;
+    font-weight: $font-weight-bold;
+    box-shadow: $shadow-glow;
+  }
+}
+
+// Main Content
+// -----------------------------------------------------------------------------
+.main-content {
+  flex: 1;
+  margin-left: var(--sidebar-width, 260px);
+  min-height: 100vh;
+  min-height: 100dvh; // ensure content area fills viewport reliably
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: margin-left $transition-normal;
+
+  // Mobile: No left margin
+  @media (max-width: $breakpoint-lg) {
+    margin-left: 0;
+  }
+}
+
+// Menu Toggle Button (Mobile Only)
+// -----------------------------------------------------------------------------
+.menu-toggle-mobile {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-hover);
+  border: 1px solid var(--border-color-strong);
+  color: $color-white;
+  font-size: 28px;
+  cursor: pointer;
+  padding: 0;
+  border-radius: $radius-lg;
+  transition: all $transition-fast;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+
+  @media (max-width: $breakpoint-lg) {
+    display: flex;
+  }
+
+  &:hover {
+    background: var(--bg-active);
+    border-color: var(--border-color-strong);
+    box-shadow: var(--shadow-md);
+  }
+
+  svg {
+    display: block;
+    width: 28px;
+    height: 28px;
+  }
+}
+
+// Top Bar
+// -----------------------------------------------------------------------------
+.top-bar {
+  background: $bg-card;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0 $space-xl;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  height: 88px; // Total height including border
+  min-height: 88px; // Prevent shrinking
+  gap: $space-md;
+  flex-shrink: 0; // Prevent height from shrinking
+
+  @media (max-width: $breakpoint-md) {
+    padding: 0 $space-md;
+    height: 64px; // Mobile height
+    min-height: 64px;
+    gap: $space-sm;
+  }
+}
+
+// Top Bar Left
+// -----------------------------------------------------------------------------
+.top-bar-left {
+  display: flex;
+  flex-direction: column;
+  gap: $space-xs;
+  flex: 1;
+
+  @media (max-width: $breakpoint-md) {
+    align-items: center;
+    text-align: center;
+  }
+
+  h1 {
+    font-family: $font-heading;
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-bold;
+    margin: 0;
+    color: $color-white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 1;
+
+    @media (max-width: $breakpoint-md) {
+      font-size: $font-size-xl;
+    }
+    
+    @media (max-width: $breakpoint-sm) {
+      font-size: $font-size-lg;
+    }
+  }
+
+  .header-subtitle {
+    font-size: $font-size-xs;
+    color: $color-gray-500;
+    margin: 0;
+    font-weight: $font-weight-medium;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+
+    @media (max-width: $breakpoint-md) {
+      font-size: 10px;
+      letter-spacing: 0.3px;
+    }
+  }
+}
+
+// User Menu
+// -----------------------------------------------------------------------------
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: $space-lg;
+
+  @media (max-width: $breakpoint-sm) {
+    gap: $space-sm;
+  }
+
+  .add-action-btn {
+    font-family: $font-heading;
+    padding: $space-sm $space-lg;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $color-primary;
+    background: $color-accent-gradient;
+    border: none;
+    border-radius: $radius-md;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all $transition-normal;
+    box-shadow: $shadow-md;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    .btn-icon {
+      display: none;
+    }
+    
+    .btn-text {
+      display: inline;
+    }
+
+    @media (max-width: $breakpoint-md) {
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      padding: 0;
+      font-size: 28px;
+      font-weight: $font-weight-bold;
+      line-height: 1;
+      border-radius: $radius-lg;
+      
+      .btn-icon {
+        display: inline;
+      }
+      
+      .btn-text {
+        display: none;
+      }
+    }
+
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: $shadow-glow;
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+
+  .greeting {
+    color: $color-white;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    font-family: $font-heading;
+    text-transform: capitalize;
+    letter-spacing: 0.5px;
+    background: $color-accent-gradient;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+
+// Scrollable Content
+// -----------------------------------------------------------------------------
+.scrollable-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  
+  // Custom scrollbar
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: $radius-full;
+    transition: background $transition-fast;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+  }
+
+  // Firefox scrollbar
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.15) rgba(255, 255, 255, 0.02);
+}
+
+// Dashboard Content
+// -----------------------------------------------------------------------------
+.dashboard-content {
+  padding: $space-2xl;
+
+  @media (max-width: $breakpoint-md) {
+    padding: $space-lg;
+  }
+}
+
+// Dashboard Greeting
+// -----------------------------------------------------------------------------
+  .dashboard-greeting {
+  margin-bottom: $space-2xl;
+  background: var(--bg-card);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+  border-radius: $radius-2xl;
+  padding: $space-2xl;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-xl);
+
+  .greeting-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: $space-2xl;
+
+    @media (max-width: $breakpoint-md) {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+
+  .greeting-text {
+    flex: 1;
+  }
+
+  .greeting-prefix {
+    display: block;
+    font-family: $font-primary;
+    font-size: $font-size-sm;
+    color: var(--text-secondary);
+    margin-bottom: $space-sm;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: $font-weight-medium;
+    
+    @media (max-width: $breakpoint-md) {
+      font-size: $font-size-xs;
+    }
+  }
+
+  .greeting-name {
+    font-family: $font-heading;
+    font-size: clamp(1.875rem, 4vw, 2.5rem);
+    font-weight: $font-weight-bold;
+    margin: 0 0 $space-sm 0;
+    background: var(--color-accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-transform: capitalize;
+    letter-spacing: 1.5px;
+    line-height: 1.2;
+  }
+
+  .greeting-tagline {
+    font-family: $font-primary;
+    font-size: $font-size-sm;
+    color: var(--text-secondary);
+    margin: 0;
+    font-weight: $font-weight-medium;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: $space-xs;
+  }
+
+  .rocket-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    color: var(--text-secondary);
+  }
+}
+
+// Stats Grid - Top Row (2 columns)
+// -----------------------------------------------------------------------------
+.stats-grid-top {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $space-xl;
+  margin-bottom: $space-xl;
+
+  @media (max-width: $breakpoint-md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Stats Grid - Bottom Row (3 columns)
+// -----------------------------------------------------------------------------
+.stats-grid-bottom {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $space-xl;
+  margin-bottom: $space-3xl;
+
+  @media (max-width: $breakpoint-lg) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: $breakpoint-md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Stat Card
+// -----------------------------------------------------------------------------
+.stat-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+  padding: $space-2xl;
+  border-radius: $radius-xl;
+  box-shadow: var(--shadow-lg);
+  transition: all $transition-normal;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-glow);
+    border-color: var(--border-color-strong);
+  }
+
+  h3 {
+    font-family: $font-primary;
+    margin: 0 0 $space-sm 0;
+    font-size: $font-size-sm;
+    color: var(--text-secondary);
+    font-weight: $font-weight-medium;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    
+    @media (max-width: $breakpoint-md) {
+      font-size: $font-size-xs;
+    }
+  }
+}
+
+// Stat Number
+// -----------------------------------------------------------------------------
+.stat-number {
+  font-family: $font-heading;
+  margin: 0 0 $space-sm 0;
+  font-size: $font-size-3xl;
+  font-weight: $font-weight-bold;
+  color: var(--text-primary);
+  line-height: 1;
+  transition: all $transition-normal;
+  
+  @media (max-width: $breakpoint-md) {
+    font-size: $font-size-2xl;
+  }
+}
+
+// Stat Details
+// -----------------------------------------------------------------------------
+.stat-details {
+  font-family: $font-primary;
+  margin: 0;
+  font-size: $font-size-sm;
+  color: var(--text-secondary);
+  font-weight: $font-weight-medium;
+  line-height: 1.4;
+}
+
+// Welcome Section
+// -----------------------------------------------------------------------------
+.welcome-section {
+  background: var(--bg-card);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+  padding: $space-4xl $space-3xl;
+  border-radius: $radius-2xl;
+  text-align: center;
+  box-shadow: var(--shadow-xl);
+  position: relative;
+  overflow: hidden;
+
+  // Animated background
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: $glow-gradient;
+    opacity: 0.1;
+    animation: rotate 20s linear infinite;
+  }
+
+  h2 {
+    font-family: $font-heading;
+    margin: 0 0 $space-md 0;
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-bold;
+    background: $color-accent-gradient;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+    z-index: 1;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    
+    @media (max-width: $breakpoint-md) {
+      font-size: $font-size-xl;
+    }
+  }
+
+  p {
+    font-size: $font-size-base;
+    color: var(--text-secondary);
+    margin: 0;
+    position: relative;
+    z-index: 1;
+    
+    @media (max-width: $breakpoint-md) {
+      font-size: $font-size-sm;
+    }
+  }
+}
+
+// Dashboard Footer
+// -----------------------------------------------------------------------------
+.dashboard-footer {
+  margin-top: $space-4xl;
+  padding-top: $space-xl;
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+  
+  @media (max-width: $breakpoint-md) {
+    margin-top: $space-3xl;
+    padding-top: $space-lg;
+  }
+  
+  p {
+    font-family: $font-primary;
+    font-size: $font-size-sm;
+    color: var(--text-secondary);
+    margin: 0;
+    font-weight: $font-weight-medium;
+    letter-spacing: 0.5px;
+    
+    @media (max-width: $breakpoint-md) {
+      font-size: $font-size-xs;
+    }
+  }
+}
+
+// Global Footer (shown on all pages)
+// -----------------------------------------------------------------------------
+.global-footer {
+  margin-top: $space-2xl;
+  padding: $space-md $space-2xl;
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+  background: var(--bg-card);
+  backdrop-filter: blur(10px);
+  
+  @media (max-width: $breakpoint-md) {
+    margin-top: $space-xl;
+    padding: $space-sm $space-lg;
+  }
+  
+  p {
+    font-family: $font-primary;
+    font-size: $font-size-xs;
+    color: var(--text-secondary);
+    margin: 0;
+    font-weight: $font-weight-normal;
+    letter-spacing: 0.3px;
+    line-height: 1.4;
+    
+    @media (max-width: $breakpoint-md) {
+      font-size: 10px;
+    }
+  }
+}
+
+// Loading State
+// -----------------------------------------------------------------------------
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: $space-lg;
+
+  .spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    border-top: 4px solid $color-white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  p {
+    color: $color-gray-400;
+    font-size: $font-size-base;
+    font-weight: $font-weight-medium;
+  }
+}
+
+// Animations
+// -----------------------------------------------------------------------------
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+  }
+  25% {
+    transform: translateY(-20px) translateX(10px);
+  }
+  50% {
+    transform: translateY(-10px) translateX(20px);
+  }
+  75% {
+    transform: translateY(-30px) translateX(5px);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Responsive Design
+// -----------------------------------------------------------------------------
+@media (max-width: $breakpoint-lg) {
+  .sidebar {
+    width: 240px;
+  }
+
+  .main-content {
+    margin-left: 240px;
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .sidebar {
+    position: fixed;
+    transform: translateX(-100%);
+    transition: transform $transition-normal;
+    width: 280px;
+    z-index: 1000;
+
+    &.open {
+      transform: translateX(0);
+    }
+  }
+
+  .main-content {
+    margin-left: 0;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .top-bar {
+    padding: $space-lg;
+
+    h1 {
+      font-size: $font-size-2xl;
+    }
+  }
+
+  .dashboard-content {
+    padding: $space-lg;
+  }
+
+  .welcome-section {
+    padding: $space-2xl;
+
+    h2 {
+      font-size: $font-size-2xl;
+    }
+  }
+}

@@ -1,0 +1,62 @@
+@use '../styles/variables' as *;
+
+.clearable-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    .clearable-input {
+        flex: 1;
+        width: 100%;
+        padding-right: $space-3xl; // Space for clear button
+    }
+
+    .clear-input-btn {
+        position: absolute;
+        right: $space-sm;
+        top: 50%;
+        transform: translateY(-50%);
+        background: transparent;
+        border: none;
+        color: var(--text-tertiary);
+        cursor: pointer;
+        padding: $space-xs;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: $radius-sm;
+        transition: all $transition-fast;
+        font-size: 18px;
+        line-height: 1;
+        z-index: 1;
+
+        &:hover {
+            color: var(--text-primary);
+            background: var(--bg-hover);
+        }
+
+        &:active {
+            transform: translateY(-50%) scale(0.9);
+        }
+
+        svg {
+            display: block;
+        }
+    }
+}
+
+// For date inputs, adjust padding to avoid overlap with calendar icon
+.clearable-input-wrapper {
+    input[type="date"],
+    input[type="datetime-local"],
+    input[type="time"] {
+        padding-right: $space-4xl; // Extra space for both clear and calendar icons
+    }
+
+    input[type="date"] + .clear-input-btn,
+    input[type="datetime-local"] + .clear-input-btn,
+    input[type="time"] + .clear-input-btn {
+        right: $space-2xl; // Move left to avoid calendar icon
+    }
+}

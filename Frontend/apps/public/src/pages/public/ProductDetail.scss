@@ -1,0 +1,268 @@
+@use '@netsurf/ui/styles/variables' as *;
+
+.detail-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: $space-2xl $space-xl;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-sm;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-family: $font-heading;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: $space-2xl;
+    transition: color $transition-fast;
+
+    &:hover {
+        color: var(--text-primary);
+    }
+
+    svg {
+        font-size: 20px;
+    }
+}
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $space-3xl;
+    margin-bottom: $space-3xl;
+
+    @media (max-width: $breakpoint-md) {
+        grid-template-columns: 1fr;
+        gap: $space-xl;
+    }
+}
+
+.detail-image {
+    border-radius: $radius-xl;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+
+    img {
+        width: 100%;
+        height: auto;
+        display: block;
+        object-fit: cover;
+    }
+}
+
+.detail-info {
+    display: flex;
+    flex-direction: column;
+    gap: $space-md;
+}
+
+.detail-category {
+    display: inline-block;
+    width: fit-content;
+    padding: $space-xs $space-lg;
+    background: rgba(59, 130, 246, 0.2);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: $radius-full;
+    font-family: $font-heading;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    color: #3b82f6;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.detail-title {
+    font-family: $font-heading;
+    font-size: $font-size-4xl;
+    font-weight: $font-weight-extrabold;
+    color: var(--text-primary);
+    margin: 0;
+    line-height: $line-height-tight;
+}
+
+.detail-price {
+    font-family: $font-heading;
+    font-size: $font-size-3xl;
+    font-weight: $font-weight-extrabold;
+    background: $color-accent-gradient;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0;
+}
+
+.detail-description {
+    font-family: $font-primary;
+    font-size: $font-size-base;
+    color: var(--text-secondary);
+    line-height: $line-height-relaxed;
+    margin: $space-md 0;
+}
+
+.result-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: $radius-lg;
+    padding: $space-lg;
+    margin: $space-md 0;
+
+    h3 {
+        font-family: $font-heading;
+        font-size: $font-size-lg;
+        font-weight: $font-weight-bold;
+        color: var(--text-primary);
+        margin: 0 0 $space-sm;
+    }
+
+    p {
+        font-family: $font-primary;
+        font-size: $font-size-sm;
+        color: var(--text-secondary);
+        line-height: $line-height-relaxed;
+        margin: 0;
+    }
+}
+
+.youtube-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-sm;
+    padding: $space-md $space-xl;
+    background: linear-gradient(135deg, #ff0000, #cc0000);
+    border: none;
+    border-radius: $radius-lg;
+    color: #fff;
+    font-family: $font-heading;
+    font-size: $font-size-md;
+    font-weight: $font-weight-bold;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all $transition-normal;
+    cursor: pointer;
+
+    svg {
+        font-size: 24px;
+    }
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(255, 0, 0, 0.3);
+    }
+}
+
+.whatsapp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-sm;
+    padding: $space-md $space-xl;
+    background: linear-gradient(135deg, #25d366, #128c7e);
+    border: none;
+    border-radius: $radius-lg;
+    color: #fff;
+    font-family: $font-heading;
+    font-size: $font-size-md;
+    font-weight: $font-weight-bold;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all $transition-normal;
+    cursor: pointer;
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+    }
+}
+
+// Video Section
+.video-section {
+    margin-top: $space-2xl;
+}
+
+.video-title {
+    font-family: $font-heading;
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-bold;
+    color: var(--text-primary);
+    margin: 0 0 $space-lg;
+    text-align: center;
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+    border-radius: $radius-xl;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    background: #000;
+
+    iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+}
+
+// Skeleton
+.detail-skeleton {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $space-3xl;
+
+    @media (max-width: $breakpoint-md) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.skeleton-img {
+    aspect-ratio: 1;
+    border-radius: $radius-xl;
+    background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.03) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+.skeleton-info {
+    display: flex;
+    flex-direction: column;
+    gap: $space-lg;
+}
+
+.skeleton-line {
+    height: 20px;
+    border-radius: $radius-sm;
+    background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.03) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    width: 80%;
+
+    &.wide { width: 100%; height: 40px; }
+    &.medium { width: 50%; height: 30px; }
+}
+
+.not-found {
+    text-align: center;
+    padding: $space-5xl 0;
+
+    h2 {
+        font-family: $font-heading;
+        font-size: $font-size-3xl;
+        color: var(--text-primary);
+        margin-bottom: $space-lg;
+    }
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}

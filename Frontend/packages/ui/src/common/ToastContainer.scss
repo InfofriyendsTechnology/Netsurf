@@ -1,0 +1,22 @@
+@use '../styles/variables' as *;
+
+.toast-container {
+  position: fixed;
+  top: $space-xl;
+  right: $space-xl;
+  z-index: 100000;
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+  pointer-events: none;
+
+  @media (max-width: $breakpoint-sm) {
+    top: $space-md;
+    right: $space-md;
+    left: $space-md;
+  }
+
+  > * {
+    pointer-events: all;
+  }
+}
