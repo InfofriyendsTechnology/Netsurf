@@ -84,7 +84,7 @@ const ProductDetail = () => {
                     )}
 
                     <a
-                        href={`https://wa.me/919876543210?text=I am interested in ${product.title} (₹${product.price})`}
+                        href={`https://wa.me/918553535342?text=I am interested in ${product.title} (₹${product.price})`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="whatsapp-btn"
